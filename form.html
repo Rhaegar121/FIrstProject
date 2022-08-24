@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Form</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* text-transform: capitalize; */
+        }
+        body {
+            background-image: url("img/backiee-64431.jpg");
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        #form {
+            margin: 3rem auto;
+            background-color: rgba(240, 248, 255, 0.5);
+            width: 60vw;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            backdrop-filter: blur(6px);
+        }
+        #form h1 {
+            margin-bottom: 1rem;
+        }
+        input {
+            width: 100%;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            outline: 0;
+            padding: 1rem;
+            border: 1px solid #333;
+            background-color: transparent;
+        }
+        button[type="submit"] {
+            border-radius: 0.5rem;
+            padding: 1rem;
+            background-color: transparent;
+            border: 1px solid #333;
+            cursor: pointer;
+        }
+        .error {
+            color: tomato;
+            padding-bottom: 0.5rem;
+            display: block;
+            text-transform: none;
+        }
+        input.error {
+            border: 1px solid tomato;
+        }
+        #password {
+            width: 96%;
+        }
+        i {
+            padding-left: 0.2rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <form action="" id="form">
+        <h1>Register Form</h1>
+
+        <div>
+            <input type="text" id="name" placeholder="Enter Name" autocomplete="off">
+            <span id="name_error" class="error"></span>
+        </div>
+        <div>
+            <input type="email" id="email" placeholder="Enter Email" autocomplete="off">
+            <span id="email_error" class="error"></span>
+        </div>
+        <div>
+            <input type="password" id="password" placeholder="Enter Password">
+            <i class="fa-solid fa-eye-slash" id="show_password"></i>
+            <span id="password_error" class="error"></span>
+        </div>
+        <div>
+            <input type="password" id="c_password" placeholder="Enter confirm Password">
+            <span id="c_password_error" class="error"></span>
+        </div>
+        <div>
+            <button type="submit">Register</button>
+        </div>
+    </form>
+
+    <script>
+        const form = document.querySelector("#form")
+        const name = document.querySelector("#name")
+        const email = document.querySelector("#email")
+        const password = document.querySelector("#password")
+        const c_password = document.querySelector("#c_password")
+
+        const name_error = document.querySelector("#name_error")
+        const email_error = document.querySelector("#email_error")
+        const password_error = document.querySelector("#password_error")
+        const c_password_error = document.querySelector("#c_password_error")
+
+        form.addEventListener("submit", function(e) {
+            e.preventDefault() 
+
+            function checkEmpty(input, error, msg) {
+            if(input.value.trim() == "" ) {
+                error.textContent = msg
+                input.classList.add("error")
+            }
+        }
+
+            checkEmpty(name, name_error, "name is required")
+            checkEmpty(email, email_error, "email is required")
+            checkEmpty(password, password_error, "password is required")
+            checkEmpty(c_password, c_password_error, "confirm password is required")
+
+            if(password.value.trim() !== c_password.value.trim()) {
+                c_password_error.textContent = "passwords do not match"
+            } 
+        })
+
+        const inputs = document.querySelectorAll("input")
+        inputs.forEach(input => {
+            input.onkeypress = () => {
+                input.classList.remove("error")
+                input.parentElement.querySelector(".error").textContent = ""
+            }
+        })
+
+        const show_password = document.querySelector("#show_password")
+        show_password.onclick = () => {
+            if(show_password.classList.contains("fa-eye-slash")) {
+                password.setAttribute("type", "text")
+                show_password.classList.add("fa-eye")
+                show_password.classList.remove("fa-eye-slash")
+            } else {
+                password.setAttribute("type", "password")
+                show_password.classList.add("fa-eye-slash")
+                show_password.classList.remove("fa-eye")
+            }
+        }
+
+    </script>
+</body>
+</html>
